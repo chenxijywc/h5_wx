@@ -3,7 +3,15 @@ const path = require('path')
 const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const packageConfig = require('../package.json')
-
+let scssUrlParam = ""
+console.log('process.platform:'+process.platform);
+console.log('__dirname:' + __dirname);
+console.log('path.dirname(__dirname):' + path.dirname(__dirname));
+if (process.platform=="darwin") {
+	scssUrlParam = '@import"'+ path.dirname(__dirname) + '/src/assets/common/css/function.scss"'+';';
+} else {
+	scssUrlParam = '@import"'+ path.dirname(__dirname).replace(/\\/g, '/') + '/src/assets/common/css/function.scss"'+';';
+}
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
     ? config.build.assetsSubDirectory
@@ -30,14 +38,15 @@ exports.cssLoaders = function (options) {
   }
 
   // generate loader string to be used with extract text plugin
-  function generateLoaders (loader, loaderOptions) {
+  function generateLoaders (loader, loaderOptions, params) {
     const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
-
+	params = params || '';
     if (loader) {
       loaders.push({
         loader: loader + '-loader',
         options: Object.assign({}, loaderOptions, {
-          sourceMap: options.sourceMap
+          sourceMap: options.sourceMap,
+          data: params
         })
       })
     }
@@ -60,7 +69,7 @@ exports.cssLoaders = function (options) {
     postcss: generateLoaders(),
     less: generateLoaders('less'),
     sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass'),
+    scss: generateLoaders('sass', {} , scssUrlParam),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
   }

@@ -1,0 +1,7 @@
+@function rem($px){
+    @return $px / 37.5 * 1rem;
+}
+
+html{
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC","Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif;
+}
