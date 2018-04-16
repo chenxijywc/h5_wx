@@ -3,9 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import mintUiCss from 'mint-ui/lib/style.css';
+import mintUi from 'mint-ui';
+import ajax from './utils/axios';
 
 Vue.config.productionTip = false
-
+mintUi.install(Vue);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

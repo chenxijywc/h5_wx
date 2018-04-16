@@ -33,7 +33,6 @@
 import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
-import { isdev } from './common.js';
 let axiosIns = axios.create();
 if (process.env.USER_ENV == 'dev') {
     axiosIns.defaults.baseURL = '/api'
@@ -53,8 +52,7 @@ axiosIns.defaults.isForm = false
 axiosIns.interceptors.request.use(function(config) {
     //配置config
     config.headers.Accept = 'application/json';
-    const configs = config.data || {}
-    if (config.isForm || configs.isForm) {
+    if (config.isForm) {
         config.transformRequest = [function(data) {
             return qs.stringify(data);
         }];
@@ -99,22 +97,14 @@ ajaxMethod.forEach((method) => {
                  */
                 let thisHost = window.location.host,
                     hrefUrl = window.location.href;
-                //判断是否是活动
-                if (thisHost.indexOf('activity') > -1) {
-                    if (response.data.result === 1 && response.data.errorCode == "-99" && config && config.isCheckLogin) {
-                        window.location.href = isdev() + "/service/error/check_login_and_tologin?backUrl=" + encodeURIComponent(hrefUrl);
-                        return;
-                    } else {
-                        resolve(response.data);
-                        return;
-                    }
-                }
                 if (isNaN(response.data.result)) {
                     resolve(response.data);
                 } else if (response.data.result === 1) {
                     resolve(response.data);
                 } else if (response.data.result === 0) {
                     resolve(response.data);
+                } else if (response.data.result === -99) {
+                	window.location.href = "www.baidu.com";
                 }
             }).catch((err) => {
                 console.error(err);
