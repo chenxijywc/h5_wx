@@ -59,7 +59,39 @@
 					"userId": this.shareUid
 	    		};
 	    		console.log("$ajax", this.$ajax);
-				this.$ajax.get('/service/sms/getCaptcha4NewUserRecieveCoupon', {params: paramObj}).then(res => {
+	    		this.$ajax.post('/service/sms/getCaptcha4NewUserRecieveCoupon', paramObj, {
+	    			xxx: '000',
+	    			headers: {
+			        'Content-Type': 'application/x-www-form-urlencoded',
+			        'sessionId':  "sessionId",
+			        'authKey': "authKey",
+			    }}).then(res => {
+					let data = res,
+						result = data.result,
+						msgCode = data.errorCode,
+						msgObj,
+						msg;
+					msgObj = {
+						"101": "手机号不能为空！",
+						"102": "验证码发送失败！",
+						"1013": "呃~无法领取自己发放的礼包！",
+						"1014": "抱歉~您已经是注册用户无法领取该礼包！"
+					};
+			        if(result == 1) {
+			        	this.$refs.timerBtn.send();
+						this.$Toast({
+							message: "验证码发送成功！"
+						});
+			        } else {
+						msg = msgObj[msgCode];
+						this.$Toast({message: msg});
+			        }
+			    }, function (res) {
+					this.$Toast({
+						message: "验证码发送失败！"
+					});
+			    });
+				this.$ajax.get('/service/sms/getCaptcha4NewUserRecieveCoupon', {params: paramObj}, {xxx: '000'}).then(res => {
 					let data = res,
 						result = data.result,
 						msgCode = data.errorCode,

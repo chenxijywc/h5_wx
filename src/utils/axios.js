@@ -41,21 +41,19 @@ if (process.env.USER_ENV == 'dev') {
 }
 //设置默认返回数据类型
 axiosIns.defaults.responseType = 'json';
-axiosIns.defaults.headers = { 'X-Requested-With': 'XMLHttpRequest' };
+axiosIns.defaults.headers = {
+	'Accept': 'application/json',
+	'X-Requested-With': 'XMLHttpRequest'
+};
 //定义对于给定的HTTP 响应状态码是 resolve 或 reject  promise 。如果 `validateStatus` 返回 `true` (或者设置为 `null` 或 `undefined`)，promise 将被 resolve; 否则，promise 将被 rejecte
 axiosIns.defaults.validateStatus = function(status) {
     return true;
 };
-//前置序列化表单默认为false
-axiosIns.defaults.isForm = false
     //axios 请求拦截器，前置登录
 axiosIns.interceptors.request.use(function(config) {
-    //配置config
-    config.headers.Accept = 'application/json';
-    if (config.isForm) {
-        config.transformRequest = [function(data) {
-            return qs.stringify(data);
-        }];
+    console.log("config",config);
+    if (localStorage.token) {
+      config.headers.Authorization = localStorage.token;
     }
     return config;
 });
@@ -65,7 +63,6 @@ axiosIns.interceptors.response.use(function(response) {
     let status = response.status;
     if (status === 200) {
         return Promise.resolve(response);
-        console.log(response.data.msg)
     } else {
         return Promise.reject(response);
     }
