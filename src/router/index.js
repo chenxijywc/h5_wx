@@ -4,6 +4,7 @@ import Index from '@/components/index'
 import RegisterIndex from '@/components/register/index'
 import LoginIndex from '@/components/login/index'
 import UserDetail from '@/components/user/detail'
+import CourseList from '@/components/course/list'
 Vue.use(Router)
 
 export default new Router({
@@ -27,6 +28,11 @@ export default new Router({
       path: '/user/detail',
       name: 'userDetail',
       component: UserDetail
+    },
+    {
+      path: '/course/list',
+      name: 'courseList',
+      component: CourseList
     }
   ]
 })
