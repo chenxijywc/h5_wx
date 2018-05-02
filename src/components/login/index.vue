@@ -63,7 +63,7 @@
 	    			'userPhone': this.userPhone,
 					"verifyCode": this.verifyCode
 	    		};
-	    		this.$ajax.post('yuechanxin/httpreq/userlogin', paramObj, {
+	    		this.$http.POST('yuechanxin/httpreq/userlogin', paramObj, {
 	    			xxx: '000',
 	    			headers: {
 			        'sessionId':  "sessionId",
@@ -81,15 +81,15 @@
 					};
 			        if(result == 1) {
 			        	this.$refs.timerBtn.send();
-						this.$Toast({
+						this.$toast({
 							message: "验证码发送成功！"
 						});
 			        } else {
 						msg = msgObj[msgCode];
-						this.$Toast({message: msg});
+						this.$toast({message: msg});
 			        }
 			    }, function (res) {
-					this.$Toast({
+					this.$toast({
 						message: "验证码发送失败！"
 					});
 			    });

@@ -37,7 +37,8 @@
 					let paramObj =  {
 		    			'userPhone': this.phone.trim(),
 		    		};
-		    		this.$ajax.post('/service/sms/getCaptcha4NewUserRecieveCoupon', paramObj).then(res => {
+		    		console.log(this.$http);
+		    		this.$http.POST('/service/sms/getCaptcha4NewUserRecieveCoupon', paramObj).then(res => {
 						let data = res;
 						this.$toast({
 							message: "验证码发送成功！"
