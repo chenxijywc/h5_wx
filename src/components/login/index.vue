@@ -7,18 +7,18 @@
 				<li class="item">
 					<div class="item-wrap">
 						<label class="label">手机：</label>
-						<input class="input name" />
+						<input class="input name" v-model="userPhone"/>
 					</div>
 				</li>
 				<li class="item">
 					<div class="item-wrap">
 						<label class="label">验证码：</label>
-						<input class="input name" />
-						<button class="button">获取验证码</button>
+						<input class="input name" v-model="verifyCode"/>
+						<timer-btn :phone="userPhone" :second="30" :btntext="'获取验证码'" ref="timerBtn"></timer-btn>
 					</div>
 				</li>
 			</ul>
-			<div class="btn">
+			<div class="btn" @click="submit">
 				
 			</div>
 		</div>
@@ -26,87 +26,48 @@
 </template>
 
 <script>
+	import Url  from 'url';
+	import QueryString from 'querystring';
+	import * as Common  from "../../utils/common";
+	import timerBtn  from '../common/timerBtn.vue';
 	export default {
 		name: 'index',
 		data() {
 			return {
-				mobile: "18317046229",
-				code: "123456"
+				userPhone: "18317046229",
+				verifyCode: "123456"
 			}
+		},
+		components: {timerBtn},
+		created (){
+			
 		},
 		methods: {
 			/**
-			* 手机号校验
+			 * 登录
 			 */
-			testMobile: function () {
-				let mobileRegx = /^1[3|4|5|7|8|9][0-9]{9}$/;
-				let mobile = this.mobile.trim();
-		        if (mobileRegx.test(mobile)) {
-		        	return true;
-		        }else {
-		        	return false;
-		        };
-			},
-			/**
-			* 验证码校验
-			 */
-			testCode: function () {
-				let codeRegx = /^[0-9]{6}$/;
-				let code = this.code.trim();
-		        if (codeRegx.test(code)) {
-		        	return true;
-		        }else {
-		        	return false;
-		        };
-			},
-			/**
-			*发送验证码
-			*/
-			sendSmsCode: function () {
-				if (!this.testMobile()) {
+			submit() {
+				if (!Common.testPhone(this.userPhone)) {
 					this.$toast({
 						message: "请输入正确的手机号！"
 					});
 					return ;
 				}
+				if (!Common.testVerifyCode(this.verifyCode)) {
+					this.$toast({
+						message: "请输入正确的验证码！"
+					});
+					return ;
+				}
 				let paramObj =  {
-	    			'mobilePhone': this.mobile,
-					"userId": this.shareUid
+	    			'userPhone': this.userPhone,
+					"verifyCode": this.verifyCode
 	    		};
-	    		console.log("$ajax", this.$ajax);
-	    		this.$ajax.post('/service/sms/getCaptcha4NewUserRecieveCoupon', paramObj, {
+	    		this.$ajax.post('yuechanxin/httpreq/userlogin', paramObj, {
 	    			xxx: '000',
 	    			headers: {
-			        'Content-Type': 'application/x-www-form-urlencoded',
 			        'sessionId':  "sessionId",
-			        'authKey': "authKey",
 			    }}).then(res => {
-					let data = res,
-						result = data.result,
-						msgCode = data.errorCode,
-						msgObj,
-						msg;
-					msgObj = {
-						"101": "手机号不能为空！",
-						"102": "验证码发送失败！",
-						"1013": "呃~无法领取自己发放的礼包！",
-						"1014": "抱歉~您已经是注册用户无法领取该礼包！"
-					};
-			        if(result == 1) {
-			        	this.$refs.timerBtn.send();
-						this.$Toast({
-							message: "验证码发送成功！"
-						});
-			        } else {
-						msg = msgObj[msgCode];
-						this.$Toast({message: msg});
-			        }
-			    }, function (res) {
-					this.$Toast({
-						message: "验证码发送失败！"
-					});
-			    });
-				this.$ajax.get('/service/sms/getCaptcha4NewUserRecieveCoupon', {params: paramObj}, {xxx: '000'}).then(res => {
 					let data = res,
 						result = data.result,
 						msgCode = data.errorCode,
@@ -139,7 +100,7 @@
 
 <style lang="scss">
 	.index-wrap {
-		height: rem(600);
+		height: 100%;
 		background: #ffffff url(../../assets/login/images/bg.jpg) center center no-repeat;
 		background-size: 100% 100%;
 		position: relative;
@@ -172,6 +133,7 @@
 						background: #ffffff;
 						border-radius: rem(16/2);
 						box-shadow: 1px 1px 3px rgba(164, 164, 164, 0.8) inset;
+						overflow: hidden;
 						.label {
 							height: rem(55/2);
 							line-height: rem(55/2);

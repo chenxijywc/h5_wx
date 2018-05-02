@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Index from '@/components/index'
 import RegisterIndex from '@/components/register/index'
 import LoginIndex from '@/components/login/index'
+import UserDetail from '@/components/user/detail'
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +22,11 @@ export default new Router({
       path: '/login/index',
       name: 'loginIndex',
       component: LoginIndex
+    },
+    {
+      path: '/user/detail',
+      name: 'userDetail',
+      component: UserDetail
     }
   ]
 })

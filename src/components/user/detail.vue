@@ -1,49 +1,53 @@
 <template>
-	<div class="index-wrap">
+	<div class="detail-wrap">
 		<div class="header">
+			<img src="../../assets/user/detail/images/user-photo.png"/>
 		</div>
 		<div class="body">
 			<ul class="list">
-				<li class="item flex">
+				<li class="item">
 					<div class="item-wrap">
 						<label class="label">姓名：</label>
-						<input class="input name" />
-					</div>
-					<div class="item-wrap">
-						<label class="label">性别：</label>
-						<input class="input sex" />
+						<input class="input" />
 					</div>
 				</li>
 				<li class="item">
 					<div class="item-wrap">
-						<label class="label">手机：</label>
-						<input class="input name" />
+						<label class="label">生日：</label>
+						<input class="input" />
 					</div>
 				</li>
 				<li class="item">
 					<div class="item-wrap">
-						<label class="label">验证码：</label>
-						<input class="input name" />
-						<button class="button">获取验证码</button>
+						<label class="label">会员ID码：</label>
+						<input class="input" />
 					</div>
 				</li>
 				<li class="item">
 					<div class="item-wrap">
-						<label class="label">推荐ID码：</label>
-						<input class="input name" />
+						<label class="label">手机号码：</label>
+						<input class="input" />
 					</div>
 				</li>
 				<li class="item">
 					<div class="item-wrap">
-						<label class="label">网点ID码：</label>
-						<input class="input name" />
+						<label class="label">联系地址：</label>
+						<input class="input" />
+					</div>
+				</li>
+				<li class="item">
+					<div class="item-wrap">
+						<label class="label">邮政编码：</label>
+						<input class="input" />
+					</div>
+				</li>
+				<li class="item">
+					<div class="item-wrap">
+						<label class="label">电子邮箱：</label>
+						<input class="input" />
 					</div>
 				</li>
 			</ul>
-			<div class="tip">温馨提示：信息重要，请认真填写</div>
-			<div class="btn">
-				
-			</div>
 		</div>
 	</div>
 </template>
@@ -161,7 +165,7 @@
 </script>
 
 <style lang="scss">
-	.index-wrap {
+	.detail-wrap {
 		height: 100%;
 		background: #ffffff url(../../assets/register/images/bg.jpg) center center no-repeat;
 		background-size: 100% 100%;
@@ -169,18 +173,22 @@
 		overflow: hidden;
 		.header {
 			position: absolute;
-			top: rem(115/2);
+			top: rem(40/2);
 			left: 50%;
 			transform: translate(-50%, 0);
-			width: rem(357/2);
-			height: rem(145/2);
-			background: transparent url(../../assets/register/images/header.png) center center no-repeat;
-			background-size: contain;
+			width: rem(170/2);
+			height: rem(170/2);
+			img {
+				display: block;
+				width: 100%;
+				height: 100%;
+				border-radius: 999px;
+			}
 		}
 		.body {
 			margin: 0 auto;
-			margin-top: rem(380/2);
-			width: rem(500/2);
+			margin-top: rem(290/2);
+			width: rem(624/2);
 			.list {
 				width: 100%;
 				.item {

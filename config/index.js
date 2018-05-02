@@ -12,7 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
     	'/api':{
-        target:'https://cxj.activity.chexiang.com',
+        //target:'https://cxj.activity.chexiang.com',
+        target:'http://47.94.242.151',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

@@ -1,11 +1,43 @@
 <template>
 	<div class="index-wrap">
 		<div class="header" @click="sendSmsCode">
-			<mt-swipe :show-indicators="true">
-			  <mt-swipe-item class="item1" >1</mt-swipe-item>
-			  <mt-swipe-item class="item2">2</mt-swipe-item>
-			  <mt-swipe-item class="item3">3</mt-swipe-item>
+			<div class="user-box">
+				<img class="user-photo" src="../assets/index/images/user-photo.png"/>
+				<div class="user-name"><span>剑雨无车</span><span>，早上好！</span></div>
+				<div class="user-grade">
+					<img class="img" src="../assets/index/images/grade.png"/>
+				</div>
+			</div>
+			<mt-swipe :show-indicators="true" :auto="3000">
+			  <mt-swipe-item>
+			  	<a class="item-wrap">
+			  		<img class="img" src="../assets/index/images/swipe-01.jpg"/>
+			  	</a>
+			  </mt-swipe-item>
+			  <mt-swipe-item>
+			  	<a class="item-wrap">
+			  		<img class="img" src="../assets/index/images/swipe-02.jpg"/>
+			  	</a>
+			  </mt-swipe-item>
+			  <mt-swipe-item>
+			  	<a class="item-wrap">
+			  		<img class="img" src="../assets/index/images/swipe-03.jpg"/>
+			  	</a>
+			  </mt-swipe-item>
 			</mt-swipe>
+		</div>
+		<div class="body">
+			<div class="list">
+				<div class="item">
+					<img class="img" src="../assets/index/images/index-item-01.png"/>
+				</div>
+				<div class="item">
+					<img class="img" src="../assets/index/images/index-item-02.png"/>
+				</div>
+				<div class="item">
+					<img class="img" src="../assets/index/images/index-item-03.png"/>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -122,20 +154,70 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.index-wrap {
-		height: rem(600);
-		background: #e8e8e8;
+		height: 100%;
+		background: #f7f6f0 url(../assets/index/images/bg.jpg) center center no-repeat;
+		background-size: 100% 100%;
+		position: relative;
+		overflow: hidden;
 		.header {
-			height: rem(300);
-			.item1 {
-				background: red;
+			position: relative;
+			padding-top: rem(83/2);
+			.user-box {
+				box-sizing: border-box;
+				position: relative;
+				height: rem(90/2);
+				padding-left: rem(150/2);
+				padding-top: rem(20/2);
+				
+				margin-bottom: rem(34/2);
+				.user-photo {
+					position: absolute;
+					top: 0;
+					left: rem(50/2);
+					width: rem(90/2);
+					height: rem(90/2);
+					border-radius: 999px;
+				}
+				.user-grade {
+					.img {
+						height: rem(28/2);
+						width: rem(24/2);
+					}
+				}
 			}
-			.item2 {
-				background: yellow;
+			.mint-swipe {
+				height: rem(348/2);
+				.item-wrap {
+					display: block;
+					width: 100%;
+					height: rem(348/2);
+					.img {
+						display: block;
+						width: 100%;
+						height: 100%;
+					}
+				}
 			}
-			.item3 {
-				background: green;
+			
+			
+		}
+		.body {
+			width: 100%;
+			margin-top: rem(90/2);
+			.list {
+				width: 100%;
+				.item {
+					margin-top: rem(24/2);
+					&:nth-of-type(1) {
+						margin-top: 0;
+					}
+					img {
+						display: block;
+						height: rem(167/2);
+					}
+				}
 			}
 		}
 	}

@@ -14,6 +14,6 @@ export default {
 @import './assets/common/css/rest.scss';
 @import './assets/common/css/common.scss';
 	#app {
-		
+		height: 100%;
 	}
 </style>
