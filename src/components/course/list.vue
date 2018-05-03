@@ -1,17 +1,12 @@
 <template>
 	<div class="list-wrap">
 		<div class="header">
-			<ul class="list">
-				<li class="item flex">
-					<div class="item-wrap course-time">
-						<label class="label">课程时间：</label>
-						<input class="input name" v-model="userPhone"/>
-					</div>
-					<div class="search">
-						查询
-					</div>
-				</li>
-			</ul>
+			<div  class="category-box">
+				<div class="item all" @click="search('all')">全部</div>
+				<div class="item" v-for="(category, index) in categoryList" @click="search('sub')">
+					{{category.name}}
+				</div>
+			</div>
 		</div>
 		<div class="body">
 			<table class="list">
@@ -21,7 +16,7 @@
 					<td>{{course.time}}</td>
 					<td>{{course.name}}</td>
 					<td>{{course.address}}</td>
-					<td><div class="btn">报名</div></td>
+					<td><div class="btn" @click="search">报名</div></td>
 				</tr>
 			</table>
 		</div>
@@ -39,27 +34,16 @@
 			return {
 				userPhone: "18317046229",
 				verifyCode: "123456",
-				courseList: [
+				categoryList: [
 					{
-						time: "2018.05.02",
-						name: "化学",
-						address: "上海市交通大学1"
+						name: "九大体质课程",
 					},
 					{
-						time: "2018.05.02",
-						name: "化学",
-						address: "上海市交通大学2"
+						name: "产品课程",
 					},
 					{
-						time: "2018.05.02",
-						name: "化学",
-						address: "上海市交通大学3"
+						name: "视频",
 					},
-					{
-						time: "2018.05.02",
-						name: "化学",
-						address: "上海市交通大学4"
-					}
 				]
 			}
 		},
@@ -71,22 +55,9 @@
 			/**
 			 * 登录
 			 */
-			search() {
-				if (!Common.testPhone(this.userPhone)) {
-					this.$toast({
-						message: "请输入正确的手机号！"
-					});
-					return ;
-				}
-				if (!Common.testVerifyCode(this.verifyCode)) {
-					this.$toast({
-						message: "请输入正确的验证码！"
-					});
-					return ;
-				}
+			search(type) {
 				let paramObj =  {
-	    			'userPhone': this.userPhone,
-					"verifyCode": this.verifyCode
+	    			
 	    		};
 	    		this.$http.POST('yuechanxin/httpreq/userlogin', paramObj, {
 	    			xxx: '000',
@@ -131,68 +102,31 @@
 		position: relative;
 		overflow: hidden;
 		.header {
-			padding: 0 rem(70/2);
-			.list {
-				width: 100%;
+			padding-top: rem(20/2);
+			.category-box {
+				display: flex;
+				justify-content: flex-start;
+				align-items: center;
+				padding: 0 rem(40/2);
 				.item {
-					margin-top: rem(55/2);
-					&::nth-of-type(1) {
-						margin-top: rem(0);
-					}
-					.item-wrap {
-						display: flex;
-						justify-content: flex-start;
-						align-items: center;
-						background: #ffffff;
-						border-radius: rem(16/2);
-						box-shadow: 1px 1px 3px rgba(164, 164, 164, 0.8) inset;
-						overflow: hidden;
-						.label {
-							height: rem(55/2);
-							line-height: rem(55/2);
-							padding-left: rem(22/2);
-							white-space: nowrap;
-							font-size: rem(28/2);
-							color: #7b7878;
-						}
-						.input {
-							flex: 1;
-							height: rem(55/2);
-							line-height: rem(55/2);
-							outline: none;
-							border: 0;
-							background: transparent;
-							font-size: rem(28/2);
-							color: #7b7878;
-							&.name {
-								width: rem(166/2);
-							}
-							&.sex {
-								width: rem(100/2);
-							}
-						}
-					}
-					.course-time {
-						width: rem(490/2);
-					}
-					.search {
-						width: rem(100/2);
+					text-align: center;
+					font-weight: 800;
+					&.all {
 						height: rem(50/2);
 						line-height: rem(50/2);
+						padding: 0 rem(50/2);
 						border-radius: rem(16/2);
-						background: #d30404;
-						text-align: center;
-						font-size: rem(32/2);
+						background: #dd0000;
+						font-size: rem(31/2);
 						color: #ffffff;
-						&:active {
-							opacity: 0.8;
-						}
 					}
-					&.flex {
-						display: flex;
-						justify-content: space-between;
-						align-items: center;
-					}
+					height: rem(50/2);
+					line-height: rem(50/2);
+					margin-left: rem(30/2);
+					border-radius: rem(16/2);
+					background: #eae9e7;
+					font-size: rem(31/2);
+					color: #454444;
 				}
 			}
 		}
@@ -202,40 +136,7 @@
 			width: rem(625/2);
 			.list {
 				width: 100%;
-				border-collapse: collapse;
-				text-align: center;
-				.item {
-					
-					font-size: rem(24/2);
-					color: #747474;
-					&.head {
-						font-size: rem(28/2);
-						color: #747474;
-						td {
-							padding: rem(15/2) 0;
-						}
-					}
-					td {
-						padding: rem(15/2) 0;
-						.btn {
-							margin: 0 auto;
-							width: rem(80/2);
-							height: rem(40/2);
-							line-height: rem(40/2);
-							border-radius: rem(10/2);
-							background: #d30404;
-							text-align: center;
-							font-size: rem(32/2);
-							color: #ffffff;
-							&:active {
-								opacity: 0.8;
-							}
-						}
-					}
-				}
-				td {
-					border: 1px solid #747474;
-				}
+				
 			}
 		}
 	}
